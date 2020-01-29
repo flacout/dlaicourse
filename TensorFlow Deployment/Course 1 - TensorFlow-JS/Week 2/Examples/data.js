@@ -31,7 +31,12 @@ const MNIST_LABELS_PATH =
 
 /**
  * A class that fetches the sprited MNIST dataset and returns shuffled batches.
- *
+ * The sprite is a big image 784px wide 65000 pixel high
+ * Each line of pixel is an image flatten (784 = 24*24) there is 65000 image in the dataset
+ * 
+ * The labels is a file of size 650000 bytes, so 10 bytes / image
+ * This is a one hot encoding of the label
+ * 
  * NOTE: This will get much easier. For now, we do data fetching and
  * manipulation manually.
  */
@@ -52,28 +57,27 @@ export class MnistData {
         img.width = img.naturalWidth;
         img.height = img.naturalHeight;
 
-        const datasetBytesBuffer =
-            new ArrayBuffer(NUM_DATASET_ELEMENTS * IMAGE_SIZE * 4);
+        const datasetBytesBuffer = new ArrayBuffer(NUM_DATASET_ELEMENTS * IMAGE_SIZE * 4);
 
         const chunkSize = 5000;
         canvas.width = img.width;
         canvas.height = chunkSize;
 
         for (let i = 0; i < NUM_DATASET_ELEMENTS / chunkSize; i++) {
-          const datasetBytesView = new Float32Array(
-              datasetBytesBuffer, i * IMAGE_SIZE * chunkSize * 4,
-              IMAGE_SIZE * chunkSize);
-          ctx.drawImage(
-              img, 0, i * chunkSize, img.width, chunkSize, 0, 0, img.width,
-              chunkSize);
+            const datasetBytesView = new Float32Array(
+                datasetBytesBuffer, i * IMAGE_SIZE * chunkSize * 4,
+                IMAGE_SIZE * chunkSize);
+            ctx.drawImage(
+                img, 0, i * chunkSize, img.width, chunkSize, 0, 0, img.width,
+                chunkSize);
 
-          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-          for (let j = 0; j < imageData.data.length / 4; j++) {
-            // All channels hold an equal value since the image is grayscale, so
-            // just read the red channel.
-            datasetBytesView[j] = imageData.data[j * 4] / 255;
-          }
+            for (let j = 0; j < imageData.data.length / 4; j++) {
+              // All channels hold an equal value since the image is grayscale, so
+              // just read the red channel.
+              datasetBytesView[j] = imageData.data[j * 4] / 255;
+            }
         }
         this.datasetImages = new Float32Array(datasetBytesBuffer);
 
@@ -83,8 +87,7 @@ export class MnistData {
     });
 
     const labelsRequest = fetch(MNIST_LABELS_PATH);
-    const [imgResponse, labelsResponse] =
-        await Promise.all([imgRequest, labelsRequest]);
+    const [imgResponse, labelsResponse] = await Promise.all([imgRequest, labelsRequest]);
 
     this.datasetLabels = new Uint8Array(await labelsResponse.arrayBuffer());
 
@@ -94,15 +97,17 @@ export class MnistData {
     this.testIndices = tf.util.createShuffledIndices(NUM_TEST_ELEMENTS);
 
     // Slice the the images and labels into train and test sets.
-    this.trainImages =
-        this.datasetImages.slice(0, IMAGE_SIZE * NUM_TRAIN_ELEMENTS);
+    this.trainImages = this.datasetImages.slice(0, IMAGE_SIZE * NUM_TRAIN_ELEMENTS);
     this.testImages = this.datasetImages.slice(IMAGE_SIZE * NUM_TRAIN_ELEMENTS);
-    this.trainLabels =
-        this.datasetLabels.slice(0, NUM_CLASSES * NUM_TRAIN_ELEMENTS);
-    this.testLabels =
-        this.datasetLabels.slice(NUM_CLASSES * NUM_TRAIN_ELEMENTS);
+    this.trainLabels = this.datasetLabels.slice(0, NUM_CLASSES * NUM_TRAIN_ELEMENTS);
+    this.testLabels = this.datasetLabels.slice(NUM_CLASSES * NUM_TRAIN_ELEMENTS);
   }
 
+
+  
+  /*
+  * Return images flattened. The calling function resize them.
+  */
   nextTrainBatch(batchSize) {
     return this.nextBatch(
         batchSize, [this.trainImages, this.trainLabels], () => {
@@ -114,8 +119,7 @@ export class MnistData {
 
   nextTestBatch(batchSize) {
     return this.nextBatch(batchSize, [this.testImages, this.testLabels], () => {
-      this.shuffledTestIndex =
-          (this.shuffledTestIndex + 1) % this.testIndices.length;
+      this.shuffledTestIndex = (this.shuffledTestIndex + 1) % this.testIndices.length;
       return this.testIndices[this.shuffledTestIndex];
     });
   }

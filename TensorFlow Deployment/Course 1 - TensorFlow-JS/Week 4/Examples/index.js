@@ -14,6 +14,8 @@ async function loadMobilenet() {
 async function train() {
   dataset.ys = null;
   dataset.encodeLabels(3);
+
+  // create a second model for the dense layers
   model = tf.sequential({
     layers: [
       tf.layers.flatten({inputShape: mobilenet.outputs[0].shape.slice(1)}),
@@ -61,28 +63,28 @@ async function predict() {
   while (isPredicting) {
     const predictedClass = tf.tidy(() => {
       const img = webcam.capture();
-      const activation = mobilenet.predict(img);
-      const predictions = model.predict(activation);
+      const activation = mobilenet.predict(img); // model 1 frozen
+      const predictions = model.predict(activation); // model 2 custom to rock paper sisors
       return predictions.as1D().argMax();
     });
     const classId = (await predictedClass.data())[0];
     var predictionText = "";
     switch(classId){
-		case 0:
-			predictionText = "I see Rock";
-			break;
-		case 1:
-			predictionText = "I see Paper";
-			break;
-		case 2:
-			predictionText = "I see Scissors";
-			break;
-	}
-	document.getElementById("prediction").innerText = predictionText;
-			
-    
-    predictedClass.dispose();
-    await tf.nextFrame();
+      case 0:
+        predictionText = "I see Rock";
+        break;
+      case 1:
+        predictionText = "I see Paper";
+        break;
+      case 2:
+        predictionText = "I see Scissors";
+        break;
+    }
+    document.getElementById("prediction").innerText = predictionText;
+    predictedClass.dispose(); // trigger the tf.tidy to dispose what was returned by the function.
+    console.log("making prediction");
+    await tf.nextFrame(); // prevent to lock the UI thread so the page stay responsive
+
   }
 }
 
@@ -98,14 +100,13 @@ function startPredicting(){
 
 function stopPredicting(){
 	isPredicting = false;
-	predict();
+	//predict();
 }
 
 async function init(){
 	await webcam.setup();
 	mobilenet = await loadMobilenet();
-	tf.tidy(() => mobilenet.predict(webcam.capture()));
-		
+  tf.tidy(() => mobilenet.predict(webcam.capture())); // just to warm up the model and load the weights		
 }
 
 

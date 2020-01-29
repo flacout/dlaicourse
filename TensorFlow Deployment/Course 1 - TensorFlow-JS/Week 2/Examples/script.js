@@ -78,9 +78,9 @@ function erase() {
 }
     
 function save() {
-	var raw = tf.browser.fromPixels(rawImage,1);
+	var raw = tf.browser.fromPixels(rawImage,1); // get the image, take only 1 channel (we know it's a grayscale image)
 	var resized = tf.image.resizeBilinear(raw, [28,28]);
-	var tensor = resized.expandDims(0);
+	var tensor = resized.expandDims(0);  // expand dim to have shape(1,28,28, 1) only one image to predict
     var prediction = model.predict(tensor);
     var pIndex = tf.argMax(prediction, 1).dataSync();
     
@@ -88,8 +88,8 @@ function save() {
 }
     
 function init() {
-	canvas = document.getElementById('canvas');
-	rawImage = document.getElementById('canvasimg');
+	canvas = document.getElementById('canvas'); // where we draw on the browser
+	rawImage = document.getElementById('canvasimg'); // a hidden image where we copy the canvas after drawing. we'll send that to tensorflow
 	ctx = canvas.getContext("2d");
 	ctx.fillStyle = "black";
 	ctx.fillRect(0,0,280,280);

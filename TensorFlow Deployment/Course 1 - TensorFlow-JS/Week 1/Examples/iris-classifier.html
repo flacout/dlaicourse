@@ -3,17 +3,21 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
     <script lang="js">
         async function run(){
+            // load file from a url not filesystem path
+            // so need of a server to run that
             const csvUrl = 'iris.csv';
             const trainingData = tf.data.csv(csvUrl, {
                 columnConfigs: {
-                    species: {
+                    // the column name hardcoded in the cvs first line!!
+                    species: {  
                         isLabel: true
                     }
                 }
             });
-            
+
             const numOfFeatures = (await trainingData.columnNames()).length - 1;
             const numOfSamples = 150;
+            // trainingData is actually a dictionary, we need to convert in array
             const convertedData =
                   trainingData.map(({xs, ys}) => {
                       const labels = [
@@ -21,9 +25,12 @@
                             ys.species == "virginica" ? 1 : 0,
                             ys.species == "versicolor" ? 1 : 0
                       ] 
-                      return{ xs: Object.values(xs), ys: Object.values(labels)};
+                      //console.log(xs.sepal_length.toString());
+                      //return{ xs: Object.values(xs), ys: Object.values(labels)};
+                      return{ xs: Object.values(xs), ys: labels};
                   }).batch(10);
-            
+                  
+            //await convertedData.forEachAsync(e => console.log(e.xs.toString()));
             const model = tf.sequential();
             model.add(tf.layers.dense({inputShape: [numOfFeatures], activation: "sigmoid", units: 5}))
             model.add(tf.layers.dense({activation: "softmax", units: 3}));
@@ -31,7 +38,7 @@
             model.compile({loss: "categoricalCrossentropy", optimizer: tf.train.adam(0.06)});
             
             await model.fitDataset(convertedData, 
-                             {epochs:100,
+                             {epochs:10,
                               callbacks:{
                                   onEpochEnd: async(epoch, logs) =>{
                                       console.log("Epoch: " + epoch + " Loss: " + logs.loss);
@@ -39,10 +46,9 @@
                               }});
             
             // Test Cases:
-            
             // Setosa
             const testVal = tf.tensor2d([4.4, 2.9, 1.4, 0.2], [1, 4]);
-            
+    
             // Versicolor
             // const testVal = tf.tensor2d([6.4, 3.2, 4.5, 1.5], [1, 4]);
             
@@ -50,10 +56,9 @@
             // const testVal = tf.tensor2d([5.8,2.7,5.1,1.9], [1, 4]);
             
             const prediction = model.predict(testVal);
+            console.log(prediction.toString())
             const pIndex = tf.argMax(prediction, axis=1).dataSync();
-            
             const classNames = ["Setosa", "Virginica", "Versicolor"];
-            
             // alert(prediction)
             alert(classNames[pIndex])
             
