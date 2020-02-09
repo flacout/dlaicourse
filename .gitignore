@@ -17,3 +17,9 @@ JavaScript Course/.DS_Store
 .DS_Store
 TensorFlow In Practice/.DS_Store
 .DS_Store
+
+.bin
+.zip
+.tflite
+.ipynb_checkpoints/
+
