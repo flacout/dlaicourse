@@ -1,0 +1,10 @@
+1. all choices
+2. A technique that reduces precision and model size to work better on mobile
+3. flatbuffer
+4. saved_model, keras HD5
+5. true
+6. tf.saved_model.save(model, path)
+7. converter = tf.lite.TFLiteConverter.from_saved_model(path) newModel = converter.convert()
+8. from_keras_model(model)
+9. tflite_convert
+10. OPTIMIZE_FOR_LATENCY, OPTIMIZE_FOR_SIZE

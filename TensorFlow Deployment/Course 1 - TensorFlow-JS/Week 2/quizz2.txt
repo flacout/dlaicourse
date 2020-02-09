@@ -1,0 +1,11 @@
+1. model.add(tf.layers.conv2d({inputShape: [28, 28, 1], kernelSize: 3, filters: 8, activation: 'relu'})); 
+2. model.add(tf.layers.maxPooling2d({poolSize: [2, 2]})); 
+3. model.compile({  optimizer: tf.train.adam(), loss: 'categoricalCrossentropy', metrics: ['accuracy']});
+4. Use validationData: [testXs, testYs] in the list of parameters sent as the third parameter to model.fit
+5. Include the tfjs-vis script, set a callback in model.fit, and set it to a const that called show.fitCallbacks() on the tfvis object
+6. Create a list containing text values with the names of the analytics you want to capture, i.e. [‘loss’, ‘val_loss’, ‘acc’, ‘val_acc’] and pass it to fitCallbacks() as a parameter
+7. It prevents excessive multiple HTTP calls to download the data
+8. When it is executed, it cleans up all intermediate tensors allocated by a function except those returned by the function
+
+
+
