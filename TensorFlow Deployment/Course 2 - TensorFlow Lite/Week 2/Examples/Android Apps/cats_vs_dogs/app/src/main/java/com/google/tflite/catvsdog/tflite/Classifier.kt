@@ -87,6 +87,10 @@ class Classifier(assetManager: AssetManager, modelPath: String, labelPath: Strin
         return byteBuffer
     }
 
+
+
+
+
     private fun getSortedResult(labelProbArray: Array<FloatArray>): List<Classifier.Recognition> {
         Log.d("Classifier", "List Size:(%d, %d, %d)".format(labelProbArray.size,labelProbArray[0].size,lableList.size))
 
