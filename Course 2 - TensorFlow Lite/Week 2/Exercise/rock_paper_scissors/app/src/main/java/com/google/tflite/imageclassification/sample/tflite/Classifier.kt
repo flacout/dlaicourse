@@ -40,6 +40,7 @@ class Classifier(assetManager: AssetManager, modelPath: String, labelPath: Strin
         tfliteOptions.setUseNNAPI(true)
         INTERPRETER = Interpreter(loadModelFile(assetManager, modelPath),tfliteOptions)
         LABEL_LIST = loadLabelList(assetManager, labelPath)
+        Log.d("Classifier", "INTERPRETER QUANTIZATION: %s".format(INTERPRETER.getInputTensor(0).dataType().toString()))
     }
 
     private fun loadModelFile(assetManager: AssetManager, modelPath: String): MappedByteBuffer {

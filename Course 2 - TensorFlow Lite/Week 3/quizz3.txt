@@ -1,0 +1,12 @@
+1. Cocoapods
+2. TensorFlowLiteSwift
+3. You add is as part of the app bundle
+4. CVPixelBuffer
+5. Copy values to input tensor, call interpreter.invoke(), copy outputs to output Tensor
+6. Use an InterpreterOptions object and set its threadCount property to the desired amount
+7. BGRA_32
+8. Check the inputTensor Data type. If it’s uInt8, the model is quantized
+9. y, x, height, width
+
+
+

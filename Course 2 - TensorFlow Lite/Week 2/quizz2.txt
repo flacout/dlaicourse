@@ -1,0 +1,16 @@
+1. build.gradle
+2. call setUseNNAPI(true)
+3. call setNumThreads
+4. anywhere but consistency assets folder
+5. You didn’t specify that the model should not be compressed in the build.gradle file
+6. interpreter.run(inputs, predictions)
+7. byteBuffer
+8. 80
+9. 1 (maybe 4)
+10. The coordinates are in the first tensor, but arranged differently, you have to sort them before you can plot them
+
+
+
+
+
+
