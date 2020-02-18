@@ -20,8 +20,9 @@ TensorFlow In Practice/.DS_Store
 
 *.bin
 *.zip
-*.tflite
 *.h5
+*.tflite
+!Course 2 - TensorFlow Lite/Week 2/Exercise/rock_paper_scissors/app/src/main/assets/mobilenet_v1_1.0_224_quant.tflite
 *.json
 .ipynb_checkpoints/
 
