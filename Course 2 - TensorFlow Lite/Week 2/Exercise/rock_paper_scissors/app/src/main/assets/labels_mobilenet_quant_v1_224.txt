@@ -1,2 +1,3 @@
-cat
-dog
+paper
+rock
+scissors

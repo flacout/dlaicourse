@@ -18,12 +18,15 @@ select float operation for the Ops not yet supporting quantization operations
 
 ### Summary
 No Quantization --> Floating point model
-QUantization    -->
+Post Training Quantization    -->
    Only Weight quantized
    Representative Dataset --> 
        Weight+Activations quantized
            --> Limit to INT8 Ops of TFLite (might not work for your model)
            --> Use TFSelect for both int and float model.
+
+Pre Training Quantization --->
+    Real quantization. Need to train with specific call.
 
 
 # process to use TFLite model
