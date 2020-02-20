@@ -35,4 +35,14 @@ Pre Training Quantization --->
 - save the TFLite model to be used on Android system
 
 # the TFLite interpreter can be use locally to test the model before pass it to a android phone.
+
+# Install tensorflow on raspberryPi
+## Install Full tensorflow
+sudo apt update
+sudo apt install python3-dev python3-pip
+sudo apt install libatlas-base-dev  # special for raspberryPi
+pip install --upgrade tensorflow
+
+## Install tensorflowLite interpreter only
+pip3 install https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp37-cp37m-linux_armv7l.whl
   

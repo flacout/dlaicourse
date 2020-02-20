@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from tflite_runtime.interpreter import Interpreter
+#import tensorflow as tf
 import numpy as np
 import argparse
 from PIL import Image
@@ -35,6 +36,7 @@ with open(label_path, 'r') as f:
 
 # Load TFLite model and allocate tensors
 interpreter = Interpreter(model_path=model_path)
+#interpreter = tf.lite.Interpreter(model_path=model_path)
 interpreter.allocate_tensors()
 
 # Get input and output tensors.

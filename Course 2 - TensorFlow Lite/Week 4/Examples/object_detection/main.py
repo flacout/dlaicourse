@@ -13,8 +13,10 @@
 # limitations under the License.
 
 import numpy as np
-import picamera
+#import picamera
+import cv2
 import argparse
+from PIL import Image
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -50,22 +52,94 @@ if __name__ == '__main__':
     tmp = np.zeros(input_size + [3], np.uint8)
     preview = ax.imshow(tmp)
     
+    #####################################################################################
+    # test laptop with single image
 
-    with picamera.PiCamera() as camera:
-        camera.resolution = (640, 480)
-        while True:
-            stream = np.empty((480, 640, 3), dtype=np.uint8)
-            camera.capture(stream, 'rgb')
+    # img = Image.open("dog.jpg").convert('RGB')
+    # # Preprocess image
+    # img = img.resize((480, 640))
+    # img = np.array(img, dtype=np.uint8)
+    # image = load_image(img)
+    # boxes, scores, classes = detector.detect(image, args.confidence)
+    # for label, score in zip(classes, scores):
+    #     print(label, score)
+
+    # if len(boxes) > 0:
+    #     draw_bounding_boxes_on_image_array(image, boxes, display_str_list=classes)
+    
+    # preview.set_data(image)
+    # fig.canvas.get_tk_widget().update()
+    # while True:
+    #     pass
+
+    #####################################################################################
+    # code for rasberry pi
+
+    # with picamera.PiCamera() as camera:
+    #     camera.resolution = (640, 480)
+    #     while True:
+    #         stream = np.empty((480, 640, 3), dtype=np.uint8)
+    #         camera.capture(stream, 'rgb')
           
-            image = load_image(stream)
-            boxes, scores, classes = detector.detect(image, args.confidence)
-            for label, score in zip(classes, scores):
-                print(label, score)
+    #         image = load_image(stream)
+    #         boxes, scores, classes = detector.detect(image, args.confidence)
+    #         for label, score in zip(classes, scores):
+    #             print(label, score)
   
-            if len(boxes) > 0:
-                draw_bounding_boxes_on_image_array(image, boxes, display_str_list=classes)
+    #         if len(boxes) > 0:
+    #             draw_bounding_boxes_on_image_array(image, boxes, display_str_list=classes)
             
-            preview.set_data(image)
-            fig.canvas.get_tk_widget().update()
+    #         preview.set_data(image)
+    #         fig.canvas.get_tk_widget().update()
+
+
+    #####################################################################################
+    # code for laptop with opencv
+    cv2.namedWindow("preview")
+    vc = cv2.VideoCapture(0)
+
+    if vc.isOpened(): # try to get the first frame
+        rval, frame = vc.read()
+    else:
+        rval = False
+
+    while rval:
+        #cv2.imshow("preview", frame)
+        rval, frame = vc.read()
+        frame = np.array(frame, dtype=np.uint8)
+        image = load_image(frame)
+        boxes, scores, classes = detector.detect(image, args.confidence)
+        for label, score in zip(classes, scores):
+            print(label, score)
+
+        if len(boxes) > 0:
+            draw_bounding_boxes_on_image_array(image, boxes, display_str_list=classes)
+        
+        preview.set_data(image)
+        fig.canvas.get_tk_widget().update()
+
+        
+        key = cv2.waitKey(20)
+        if key == 27: # exit on ESC
+            break
+
+    cv2.destroyWindow("preview")
+
+
+    # with picamera.PiCamera() as camera:
+    #     camera.resolution = (640, 480)
+    #     while True:
+    #         stream = np.empty((480, 640, 3), dtype=np.uint8)
+    #         camera.capture(stream, 'rgb')
+          
+    #         image = load_image(stream)
+    #         boxes, scores, classes = detector.detect(image, args.confidence)
+    #         for label, score in zip(classes, scores):
+    #             print(label, score)
+  
+    #         if len(boxes) > 0:
+    #             draw_bounding_boxes_on_image_array(image, boxes, display_str_list=classes)
             
+    #         preview.set_data(image)
+    #         fig.canvas.get_tk_widget().update()          
     detector.close()

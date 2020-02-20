@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from tflite_runtime.interpreter import Interpreter
+#from tflite_runtime.interpreter import Interpreter
+import tensorflow as tf
 
 from visualization_utils import *
 from utils import *
@@ -28,7 +29,8 @@ class ObjectDetectorLite:
         self._load_label(label_path)
 
         # Define lite graph and Load Tensorflow Lite model into memory
-        self.interpreter = Interpreter(model_path=model_path)
+        #self.interpreter = Interpreter(model_path=model_path)
+        self.interpreter = tf.lite.Interpreter(model_path=model_path)
         self.interpreter.allocate_tensors()
         self.input_details = self.interpreter.get_input_details()
         self.output_details = self.interpreter.get_output_details()
