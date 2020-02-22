@@ -71,3 +71,5 @@ obj/
 .externalNativeBuild
 
 
+rsp_saved_model/
+
