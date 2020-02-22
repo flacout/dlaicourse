@@ -1,0 +1,8 @@
+1. Ectract Transform Load
+2. tfds.load(name='mnist', split='train')
+3. iterator = dataset.take(10)
+4. pritn(tfds.list_builders())
+5. load with_info=True
+6. tfds.load("mnist:1.*.*")
+7. tfds.load('mnist', split="train[:7000]")
+8. tfds.load('mnist', split='test[:10%]')
