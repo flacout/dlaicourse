@@ -1,0 +1,23 @@
+# tf.data
+Help create input pipeline. 
+Expl:
+- Extracting words from raw text.
+- convert to embeddings.
+- batch together sequences of different length
+
+
+# tf.feature_column
+## tf.numerical_columns
+
+## bucketized 
+Is when a binned number is represented in one hot encoding.
+0          1              2              
+-inf-1960   1980-2000     2000-+inf
+100        010           001
+
+tf.feature_column.bucketized_column(years, boundaries=[1960,1980, 2000])
+there is 3 boudaries will give 4 BUCKETS!!!  (inner boundaries)
+years variable is numeric values [1866, 1944, 2001, ...]
+
+## categorical_column_with_identity
+simple a one-hot encoding of a categorical
