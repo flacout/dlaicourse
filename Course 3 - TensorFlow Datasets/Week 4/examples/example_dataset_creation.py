@@ -74,6 +74,7 @@ class MyDataset(tfds.core.GeneratorBasedBuilder):
             tfds.core.SplitGenerator(
                 name=tfds.Split.TRAIN,
                 # these will be passed to generate examples
+                # ie passed as arguments to _generate_examples(self, dir_path, labels)
                 gen_kwargs={
                     "dir_path": os.path.join(extracted_path, "train"),
                     "labels": os.path.join(extracted_path, "train_labels.csv")
