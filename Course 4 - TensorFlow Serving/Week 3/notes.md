@@ -49,3 +49,28 @@ Same log directory and callback thing.
 ## Graphics
 You can also explore your images in tensorboard.
 In that case you write directly to the log_dir without going through a callback.
+
+Use a filewriter and not a callback
+
+```python
+file_writer = tf.summary.create_file_writer(logdir)
+with file_writer.as_default():
+    tf.summary.image("Training data", img, step=0)
+
+with file_writer.as_default():
+    tf.summary.image("Training data", images, max_outputs=25, step=0)
+```
+
+Can write actually many data types: scalar, audio, images, text
+
+
+## Confusion matrix
+Example of another plot that can be done for tensorboard
+
+1. Plot confusion matrix in matplotlib 
+2. translate the confusion matrix to an image .png that can be logged in tensorboard
+3. convert the image to a tf.image
+4. use file_writer to write the image to the logs.
+
+to plot the confusion matrix at every epoch you still need to use a callback to record the history
+at each epoch the callback execute the function writing a new confusion matrix image to the file_writer

@@ -1,0 +1,10 @@
+1. Store them in a log file and use epoch-by-epoch callbacks to update it. Have Tensorboard read that log file
+2. during model.fit() process
+3. tf.keras.callbacks.TensorBoard
+4. Set histogram_freq=1
+5. tensorboard dev upload --logdir ./logs
+6. tensorboard.dev/experiment/[code]
+7. tf.summary.image() -- with image as a parameter
+8. %tensorboard --logdir logs/train_data
+9. tf.keras.callbacks.LambdaCallback
+10. tf.summary

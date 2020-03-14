@@ -31,6 +31,9 @@ TensorFlow In Practice/.DS_Store
 saved_model/
 tmp/
 
+logs/
+logss/
+
 
 #built application files
 *.apk
