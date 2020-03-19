@@ -1,0 +1,8 @@
+1. All of the above
+2. Devices report only the data needed for a specific computation
+3. Devices in a network pair up, and create obfuscation keys that get cancelled out when aggregated on the server
+4. It’s designed to allow the expression of new Federated algorithms
+5. You declare the type as {float32}@clients
+6. Attribute the function with @tff.federated_computation
+7. You have to use a tff.federated_mean to calculate the value and return its results
+8. Pip install tensorflow_federated

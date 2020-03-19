@@ -42,7 +42,7 @@ The neurons (weights) are aggregated as soon as they arrive to the server
 So they cannot be reverse-engineer for a single user.
 
 
-### Masking
+### Masking for secure aggregation
 Link to the paper “Practical Secure Aggregation for Privacy-Preserving Machine Learning”
 https://eprint.iacr.org/2017/281.pdf
 
