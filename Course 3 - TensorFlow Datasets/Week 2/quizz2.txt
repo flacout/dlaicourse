@@ -1,8 +1,0 @@
-1. tf.data.Dataset
-2. Integer Categorical
-3. BucketizedColumn
-4. categorical_column_with_vocabulary_list(...)
-5. from_tensor_slices()
-6. pd.Categorical
-7. tf.data.experimental.make_csv_dataset
-8. tf.data.TextLineDataset

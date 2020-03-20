@@ -1,8 +1,0 @@
-1. DatasetBuilder
-2. FileAdapterBuilder
-3. GeneratorBasedBuilder
-4. create_new_dataset.py
-5. _info(), _split_generators(), _examples_generators()
-6. tfds.download.DownloadManager
-7. Define them in DATASET_EXTRAS as lazy loads just for your dataset
-8. DatasetInfo.citation

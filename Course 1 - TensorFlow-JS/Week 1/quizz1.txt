@@ -1,7 +1,0 @@
-1. Core API
-2. WebGL
-3. Node.js on GCP to access TPU
-4. unit:1, inputShape: [1]
-5. tensor2d with data+shape
-6. alert(model.predict(tf.tensor2d([10], [1,1])));
-7. onEpochEnd

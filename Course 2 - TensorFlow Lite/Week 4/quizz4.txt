@@ -1,8 +1,0 @@
-1. coral  paspberryPi sparkfunedge
-2. inference and training
-3. install standalone interpreter
-4. 1000
-5. tf.lite.Interpreter(directory_of_lite_model)
-6. Call get_input_details() after calling allocate_tensors() on the interpreter
-7. set the Input tensor with the set_tensor command and then call invoke()
-8. call invoke() and then call the get_tensor() on the interpreter to read the output

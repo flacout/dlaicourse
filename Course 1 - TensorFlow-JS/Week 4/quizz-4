@@ -1,8 +1,0 @@
-1. <video>
-2. async function init(){await webcam.setup();}
-3. return tf.model({inputs: mobilenet.inputs, outputs: layer.outputs});
-4. {inputShape: mobilenet.outputs[0].shape.slice(1)}
-5. Get a set of prediction embeddings from mobilenet and pass them to your model
-6. predictions.as1D().argMax(), then look at the 0th element
-7. tf.tidy(() => foo.predict());
-8. It allows you to use already-learned convolutions for distinguishing features, saving training time

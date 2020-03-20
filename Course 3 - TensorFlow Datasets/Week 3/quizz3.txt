@@ -1,9 +1,0 @@
-1. Extract Transform Load
-2. CPU for extracting transform and loading, GPU for training
-3. tf.data.Dataset.cache()
-4. train_dataset = dataset.cache(filename='cache')
-5. train_dataset = dataset.cache()
-6. augmented_dataset = dataset.map(augment)
-7. s = dataset.map(augment, num_parallel_calls=2)
-8. it's not posible  (OR cores = multiprocessing.cpu_count()
-9. vectorization
